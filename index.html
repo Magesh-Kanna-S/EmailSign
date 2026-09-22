@@ -241,6 +241,44 @@ footer p{color:var(--text-muted);font-size:0.82rem;margin-top:20px;}
 .aspect-chip.on{background:var(--accent);color:#fff;border-color:var(--accent);}
 .crop-foot{display:flex;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap;}
 
+/* ANIMATED PROFILE (cutout + moving backdrop) */
+.pm-seg{margin-top:2px;}
+.gif-bg-label{font-size:0.72rem;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-muted);margin-top:6px;}
+.gif-styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px;}
+.gif-style{border:1px solid var(--border);border-radius:10px;background:var(--bg-card);padding:6px 6px 7px;cursor:pointer;display:grid;gap:6px;transition:all .2s;}
+.gif-style:hover{border-color:var(--accent);}
+.gif-style.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
+.gs-prev{display:block;height:46px;border-radius:7px;position:relative;overflow:hidden;background:#151a2b;}
+.gs-name{font-size:0.68rem;font-weight:600;color:var(--text-secondary);text-align:center;}
+.gif-opts{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:10px;}
+.gif-opts .isl{font-size:0.74rem;font-weight:600;color:var(--text-muted);}
+.gif-match{background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-secondary);font-size:0.72rem;font-weight:600;padding:7px 12px;border-radius:999px;cursor:pointer;transition:all .2s;}
+.gif-match:hover{border-color:var(--accent);color:var(--accent);}
+.gif-make{margin-top:12px;}
+.gif-progress{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:0.72rem;color:var(--text-secondary);}
+.gp-bar{flex:1;min-width:120px;max-width:220px;height:8px;border-radius:999px;background:var(--bg-tertiary);overflow:hidden;border:1px solid var(--border);display:inline-block;}
+.gp-fill{display:block;height:100%;width:0%;background:var(--gradient-accent);border-radius:999px;transition:width .15s;}
+.gif-result{display:flex;align-items:center;gap:12px;margin-top:10px;background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.gif-result img{width:50px;height:62px;border-radius:8px;border:1px solid var(--border);display:block;object-fit:cover;flex-shrink:0;}
+.gif-res-txt{font-size:0.71rem;color:var(--text-secondary);line-height:1.5;}
+@keyframes escAurora{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+.gs-aurora{background:linear-gradient(115deg,var(--g1),var(--g2) 50%,var(--g1));background-size:300% 300%;animation:escAurora 3.2s linear infinite;}
+@keyframes escGlow{0%,100%{transform:scale(.9);filter:brightness(.55)}50%{transform:scale(1.06);filter:brightness(1.35)}}
+.gs-glow{background:radial-gradient(circle at 50% 42%,var(--g1) 0%,var(--g2) 78%);animation:escGlow 3.2s ease-in-out infinite;}
+@keyframes escSlide{0%{background-position:0 0}100%{background-position:56px 0}}
+.gs-waves{background:linear-gradient(180deg,var(--g1),var(--g2));}
+.gs-waves::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.3) 0 7px,transparent 7px 24px);animation:escSlide 2.6s linear infinite;}
+.gs-rings{background:radial-gradient(circle at 50% 50%,#1b2236 34%,var(--g2) 100%);}
+.gs-rings::before,.gs-rings::after{content:'';position:absolute;border-radius:50%;border:2px solid transparent;}
+.gs-rings::before{inset:16% 30%;border-top-color:var(--g1);border-right-color:var(--g1);animation:escSpin 2.8s linear infinite;}
+.gs-rings::after{inset:6% 44%;border-bottom-color:#fff;border-left-color:#fff;animation:escSpin 4.4s linear infinite reverse;}
+@keyframes escSpin{to{transform:rotate(360deg)}}
+@keyframes escCycle{0%{background-color:var(--g1)}50%{background-color:var(--g2)}100%{background-color:var(--g1)}}
+.gs-cycle{background-color:var(--g1);animation:escCycle 3.6s ease-in-out infinite;}
+.gs-beams{background:#141a2b;}
+.gs-beams::before{content:'';position:absolute;inset:-60%;background:conic-gradient(from 0deg,transparent 0 40deg,var(--g1) 60deg 80deg,transparent 100deg 160deg,var(--g2) 180deg 200deg,transparent 220deg 320deg,var(--g1) 340deg 360deg);animation:escSpin 5s linear infinite;opacity:.85;}
+.gs-beams::after{content:'';position:absolute;left:50%;top:50%;width:26%;height:26%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.85),transparent 70%);}
+
 /* responsive */
 @media(max-width:1120px){.sig-grid{grid-template-columns:minmax(0,1fr);}}
 @media(max-width:640px){
@@ -292,17 +330,19 @@ footer p{color:var(--text-muted);font-size:0.82rem;margin-top:20px;}
   <div class="container">
     <div class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></svg> Email Signature Studio</div>
     <h1>16 Signature Designs.<br><span class="grad">One Unified System.</span></h1>
-    <p>A general-purpose signature builder — fill in your details once, flip toggles for anything optional, crop and add your photo and logos, pick a colour scheme, and put your links in the exact order you want. Every design re-renders with your images and colours, ready for professional, academic, corporate or personal mail.</p>
+    <p>A general-purpose signature builder — fill in your details once, flip toggles for anything optional, crop and add your photo and logos, pick a colour scheme, and put your links in the exact order you want. Every design re-renders with your images and colours, ready for professional, academic, corporate or personal mail. Prefer a photo that moves? Upload a cutout, pick a moving backdrop, and add a gently animated profile. When you are done, save every design into a Word document you can copy from any time.</p>
     <div class="hero-stats">
       <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> <b>16</b>&nbsp;Designs</div>
       <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg> Elements&nbsp;on&nbsp;/&nbsp;off</div>
       <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg> Colour&nbsp;match&nbsp;from&nbsp;logos</div>
       <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H6a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><rect x="8" y="1" width="8" height="4" rx="1"/></svg> Copy&nbsp;or&nbsp;text&nbsp;version</div>
+      <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></svg> Animated&nbsp;profiles</div>
+      <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg> Save&nbsp;all&nbsp;—&nbsp;Word</div>
     </div>
     <div style="height:22px;"></div>
     <div class="compat-note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
-      <span><b>Quick start:</b> edit your details in Step 1 — every preview updates instantly. Toggle optional elements on or off, crop and upload images, pick a colour scheme and arrange your links. Then hit <b>Copy Signature</b> and paste (Ctrl/Cmd&nbsp;+&nbsp;V) into your mail client's signature box — or take the tidy <b>text version</b>.</span>
+      <span><b>Quick start:</b> edit your details in Step 1 — every preview updates instantly. Toggle optional elements on or off, crop and upload images, pick a colour scheme and arrange your links. Then hit <b>Copy Signature</b> and paste (Ctrl/Cmd&nbsp;+&nbsp;V) into your mail client's signature box — or take the tidy <b>text version</b>. Before you close the page, <b>Save all — Word document</b> keeps every design ready to copy after a refresh.</span>
     </div>
   </div>
 </section>
@@ -318,7 +358,7 @@ footer p{color:var(--text-muted);font-size:0.82rem;margin-top:20px;}
     <div id="config-root"></div>
     <div class="note-soft">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.4-4.4a1.7 1.7 0 0 0-2.4 0L5 19"/></svg>
-      <span><b>Images are session-only:</b> cropped photos and logos apply instantly across every design, and everything returns to the default look after a refresh. Logos also lend their colours to the palette automatically — fine-tune it any time in the Colour scheme group.</span>
+      <span><b>Images are session-only:</b> cropped photos, cutouts and logos apply instantly across every design, and everything returns to the default look after a refresh — download the Word copy in Step 2 to keep them. Logos also lend their colours to the palette automatically — fine-tune it any time in the Colour scheme group.</span>
     </div>
   </div>
 </section>
@@ -326,9 +366,15 @@ footer p{color:var(--text-muted);font-size:0.82rem;margin-top:20px;}
 <!-- STEP 2: GALLERY -->
 <section id="gallery" style="background:var(--bg-secondary);">
   <div class="container">
-    <div class="panel-head"><h2><span class="num">2</span> Browse &amp; Copy</h2></div>
+    <div class="panel-head"><h2><span class="num">2</span> Browse &amp; Copy</h2>
+      <button class="btn-copy" id="dl-doc-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>&nbsp;Save all — Word document</button>
+    </div>
     <p class="panel-sub">One unified system — every design adapts to the same details, images and colour scheme, so each works for professional, academic, corporate or personal mail alike. Pick the silhouette you like, then copy it with icons and links intact, or take the tidy text version.</p>
     <div class="sig-grid" id="sig-grid"></div>
+    <div class="note-soft">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>
+      <span><b>Keep them after a refresh:</b> everything you add lives only for this visit. <b>Save all — Word document</b> packs all 16 designs — images, links and animated profiles included — into one file you can open and copy from any time.</span>
+    </div>
   </div>
 </section>
 
@@ -368,6 +414,7 @@ footer p{color:var(--text-muted);font-size:0.82rem;margin-top:20px;}
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.9.7 1.5 1.7 1.5 2.8h4c0-1.1.6-2.1 1.5-2.8A6 6 0 0 0 12 3z"/></svg> Pro Tips</h3>
         <ul>
           <li>Paste with <b>Ctrl/Cmd + V</b> — the icons and their links travel with it.</li>
+          <li><b>Before you refresh</b> — hit <b>Save all — Word document</b> to keep every design ready to copy.</li>
           <li>Put <b>professional links first</b> (portfolio, LinkedIn) — reorder them in Step 1.</li>
           <li>Crop photos to a tidy rectangle before adding — square-ish frames look best.</li>
           <li>Grab the <b>Text version</b> for mail apps that prefer plain text.</li>
@@ -465,6 +512,17 @@ const DEFAULT_SHOW={
   youtube:false,instagram:false,x:false,facebook:false,whatsapp:false,telegram:false
 };
 let DATA,ORDER,ASSETS,SCHEME,SWATCHES,ICONS,PHOTOS,LOGOS;
+let PHOTO_MODE='photo';                    // profile mode: plain photo | animated cutout
+const GIF_STYLES=[
+  {key:'aurora',label:'Aurora'},
+  {key:'glow',  label:'Glow'},
+  {key:'waves', label:'Waves'},
+  {key:'rings', label:'Rings'},
+  {key:'cycle', label:'Cycle'},
+  {key:'beams', label:'Beams'}
+];
+const GIF_SPEEDS=[['Relaxed',14],['Normal',9],['Quick',6]];
+const GIFC={img:null,src:'',style:'aurora',c1:null,c2:null,speed:9,shape:'4:5',busy:false};
 function freshState(){
   DATA=JSON.parse(JSON.stringify(DEFAULTS));
   DATA.show=JSON.parse(JSON.stringify(DEFAULT_SHOW));
@@ -475,6 +533,8 @@ function freshState(){
   ICONS={shape:'rounded',size:26};
   PHOTOS={size:84};                          // profile photo width option — compact / standard / large
   LOGOS={h:54};                              // organisation logo height option
+  PHOTO_MODE='photo';
+  GIFC.img=null;GIFC.src='';GIFC.style='aurora';GIFC.c1=null;GIFC.c2=null;GIFC.speed=9;GIFC.shape='4:5';GIFC.busy=false;
 }
 const lgH=f=>Math.round(LOGOS.h*f);          // per-design logo height factor
 freshState();
@@ -661,6 +721,13 @@ function syncSchemeUI(){
     if(h.dataset.color==='acc')h.textContent=SCHEME.acc.toUpperCase();
   });
   document.querySelectorAll('.sw-btn').forEach(b=>b.classList.toggle('on',b.dataset.hex&&b.dataset.hex.toLowerCase()===SCHEME.pri.toLowerCase()));
+  // animated-panel colours follow the scheme until the user picks their own
+  document.querySelectorAll('input[data-gcolor]').forEach(inp=>{
+    if(inp.dataset.gcolor==='c1'&&!GIFC.c1)inp.value=SCHEME.pri;
+    if(inp.dataset.gcolor==='c2'&&!GIFC.c2)inp.value=SCHEME.acc;
+  });
+  const gs=document.querySelector('.gif-styles');
+  if(gs)gs.style.cssText=gifStyleVars();
 }
 
 // ══════════ SHARED BUILDERS (elements appear only when toggled on) ══════════
@@ -1138,14 +1205,50 @@ function photoFieldHTML(){
   const on=DATA.show.photo;
   return `<div class="config-field${on?'':' dim'}" data-field="photo">
     <div class="field-head"><label>Profile photo</label>${switchHTML('photo',on)}</div>
-    <div class="upload-row">
+    <div class="seg pm-seg" data-seg="pmode">
+      <button type="button" data-v="photo" class="${PHOTO_MODE==='photo'?'on':''}">Photo</button>
+      <button type="button" data-v="anim" class="${PHOTO_MODE==='anim'?'on':''}">Animated</button>
+    </div>
+    <div style="height:10px;"></div>
+    ${PHOTO_MODE==='photo'?photoModeHTML():animModeHTML()}
+  </div>`;
+}
+function photoModeHTML(){
+  return `<div class="upload-row">
       <label class="btn-upload">${SV.upload}&nbsp;Upload photo<input type="file" accept="image/*" data-upload="photo" hidden></label>
       <span class="up-thumb" data-thumb="photo"></span>
       <button class="btn-recrop" data-recrop="photo" hidden title="Adjust crop" aria-label="Adjust photo crop">${SV.crop}</button>
       <button class="btn-rem" data-rem="photo" hidden title="Remove" aria-label="Remove photo">${SV.x}</button>
     </div>
-    <div class="up-note">Crop to a tidy rectangle — corners stay softly rounded in every design. No photo? An initials tile appears instead.</div>
-  </div>`;
+    <div class="up-note">Crop to a tidy rectangle — corners stay softly rounded in every design. No photo? An initials tile appears instead.</div>`;
+}
+function animModeHTML(){
+  const c=gifColors();
+  return `<div class="upload-row">
+      <label class="btn-upload">${SV.upload}&nbsp;Upload cutout<input type="file" accept="image/png,image/webp" data-upload="cutout" hidden></label>
+      <span class="up-thumb" data-thumb="cutout"></span>
+      <button class="btn-rem" data-rem="cutout" hidden title="Remove cutout" aria-label="Remove cutout">${SV.x}</button>
+    </div>
+    <div class="up-note">A cutout is a picture of you <b>without its background</b> — pick a moving backdrop below and it shows through around you.</div>
+    <div class="gif-bg-label">Moving backdrop</div>
+    <div class="gif-styles" style="${gifStyleVars()}">${GIF_STYLES.map(s=>`<button type="button" class="gif-style${GIFC.style===s.key?' on':''}" data-gstyle="${s.key}"><span class="gs-prev gs-${s.key}"></span><span class="gs-name">${s.label}</span></button>`).join('')}</div>
+    <div class="gif-opts">
+      <span class="cc-pick">Colour A <input type="color" data-gcolor="c1" value="${c.c1}" aria-label="Backdrop colour A"></span>
+      <span class="cc-pick">Colour B <input type="color" data-gcolor="c2" value="${c.c2}" aria-label="Backdrop colour B"></span>
+      <button type="button" class="gif-match" data-gmatch="1">Match scheme</button>
+    </div>
+    <div class="gif-opts">
+      <span class="isl">Speed</span>
+      <div class="seg" data-seg="gspeed">${GIF_SPEEDS.map(sp=>`<button type="button" data-v="${sp[1]}" class="${GIFC.speed===sp[1]?'on':''}">${sp[0]}</button>`).join('')}</div>
+      <span class="isl">Shape</span>
+      <div class="seg" data-seg="gshape">
+        <button type="button" data-v="4:5" class="${GIFC.shape==='4:5'?'on':''}">Portrait</button>
+        <button type="button" data-v="1:1" class="${GIFC.shape==='1:1'?'on':''}">Square</button>
+      </div>
+    </div>
+    <button type="button" class="btn-copy gif-make" data-gifmake="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M17.8 6.2L19 5M12.2 6.2L11 5M14 9L3 20"/></svg>&nbsp;Create animated profile</button>
+    <div class="gif-progress" id="gif-progress" hidden><span id="gif-prog-label">Creating…</span><span class="gp-bar"><span class="gp-fill" id="gif-prog-fill"></span></span></div>
+    <div class="gif-result" data-gifresult hidden><img data-thumbimg="photoAnim" alt="Animated profile preview"><span class="gif-res-txt"><b>Animated profile active.</b> It sits in every design like a normal photo — the Photo size option still applies. Plays in most mail apps; a few older ones show only the first frame, which still looks right.</span></div>`;
 }
 function orgFieldHTML(f){
   const on=DATA.show[f.tog];
@@ -1254,15 +1357,20 @@ function syncToggleUI(key,val){
   }
 }
 function syncUploads(){
-  ['photo','companyLogo','schoolLogo'].forEach(k=>{
+  ['photo','companyLogo','schoolLogo','cutout'].forEach(k=>{
     const th=document.querySelector(`[data-thumb="${k}"]`);
     const rem=document.querySelector(`[data-rem="${k}"]`);
     const rec=document.querySelector(`[data-recrop="${k}"]`);
-    const a=ASSETS[k];
+    const a=k==='cutout'?(GIFC.img?{src:GIFC.src}:null):ASSETS[k];
     if(th)th.innerHTML=a?`<img src="${a.src}" alt="">`:'';
     if(rem)rem.hidden=!a;
-    if(rec)rec.hidden=!a;
+    if(rec)rec.hidden=!a||!!(ASSETS[k]&&ASSETS[k].anim);
   });
+  const pr=document.querySelector('[data-gifresult]');
+  const pi=document.querySelector('[data-thumbimg="photoAnim"]');
+  const pa=ASSETS.photo&&ASSETS.photo.anim?ASSETS.photo:null;
+  if(pr)pr.hidden=!pa;
+  if(pi&&pa)pi.src=pa.src;
 }
 function renderSwatchRow(){
   const row=document.getElementById('sw-row');
@@ -1278,7 +1386,12 @@ function bindConfig(){
   const root=document.getElementById('config-root');
   root.addEventListener('input',e=>{
     const t=e.target;
-    if(t.dataset.key){DATA[t.dataset.key]=t.value.trim();scheduleRender();}
+    if(t.dataset.gcolor){
+      GIFC[t.dataset.gcolor]=t.value;
+      const gs=document.querySelector('.gif-styles');
+      if(gs)gs.style.cssText=gifStyleVars();
+    }
+    else if(t.dataset.key){DATA[t.dataset.key]=t.value.trim();scheduleRender();}
     else if(t.dataset.lkey){DATA.links[t.dataset.lkey]=t.value.trim();scheduleRender();}
     else if(t.dataset.color){
       const isPri=t.dataset.color==='pri';
@@ -1308,18 +1421,42 @@ function bindConfig(){
     else if(btn.dataset.rem)clearUpload(btn.dataset.rem);
     else if(btn.dataset.recrop)reCrop(btn.dataset.recrop);
     else if(btn.dataset.swatch)applySwatch(btn.dataset.swatch);
+    else if(btn.dataset.gstyle){
+      GIFC.style=btn.dataset.gstyle;
+      document.querySelectorAll('.gif-style').forEach(b=>b.classList.toggle('on',b===btn));
+    }
+    else if(btn.dataset.gmatch){
+      GIFC.c1=null;GIFC.c2=null;
+      document.querySelectorAll('input[data-gcolor="c1"]').forEach(i=>i.value=SCHEME.pri);
+      document.querySelectorAll('input[data-gcolor="c2"]').forEach(i=>i.value=SCHEME.acc);
+      const gs=document.querySelector('.gif-styles');
+      if(gs)gs.style.cssText=gifStyleVars();
+      toast('Backdrop colours follow your scheme');
+    }
+    else if(btn.dataset.gifmake)createGifProfile();
     else if(btn.dataset.preset!=null&&btn.dataset.preset!==''){
       const p=PRESETS[+btn.dataset.preset];
       if(p)applyScheme(p[1],p[2],p[0],false);
     }else{
       const seg=btn.closest('.seg');
       if(seg){
-        if(seg.dataset.seg==='shape')ICONS.shape=btn.dataset.v;
-        else if(seg.dataset.seg==='size')ICONS.size=+btn.dataset.v;
-        else if(seg.dataset.seg==='photo')PHOTOS.size=+btn.dataset.v;
-        else if(seg.dataset.seg==='logo')LOGOS.h=+btn.dataset.v;
-        seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn));
-        scheduleRender();
+        if(seg.dataset.seg==='pmode'){
+          PHOTO_MODE=btn.dataset.v;
+          buildConfig();
+        }else if(seg.dataset.seg==='gspeed'){
+          GIFC.speed=+btn.dataset.v;
+          seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn));
+        }else if(seg.dataset.seg==='gshape'){
+          GIFC.shape=btn.dataset.v;
+          seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn));
+        }else{
+          if(seg.dataset.seg==='shape')ICONS.shape=btn.dataset.v;
+          else if(seg.dataset.seg==='size')ICONS.size=+btn.dataset.v;
+          else if(seg.dataset.seg==='photo')PHOTOS.size=+btn.dataset.v;
+          else if(seg.dataset.seg==='logo')LOGOS.h=+btn.dataset.v;
+          seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn));
+          scheduleRender();
+        }
       }
     }
   });
@@ -1373,10 +1510,37 @@ function moveLink(key,dir){
 
 // ─── uploads + crop ───
 function readUpload(file,slot){
+  if(slot==='cutout'){readCutout(file);return;}
   const r=new FileReader();
   r.onload=()=>{
     const img=new Image();
     img.onload=()=>openCrop(r.result,img,slot);
+    img.onerror=()=>toast('That file could not be read as an image',false);
+    img.src=r.result;
+  };
+  r.readAsDataURL(file);
+}
+function readCutout(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      // gentle check: cutouts work best when the background is see-through
+      let seeThrough=0,total=0;
+      try{
+        const s=48,c=document.createElement('canvas');c.width=s;c.height=s;
+        const x=c.getContext('2d');
+        x.clearRect(0,0,s,s);x.drawImage(img,0,0,s,s);
+        const px=x.getImageData(0,0,s,s).data;
+        for(let i=3;i<px.length;i+=4){total++;if(px[i]<200)seeThrough++;}
+      }catch(e){}
+      if(total&&seeThrough/total<0.02){
+        toast('This picture still has its background — a cutout without one works best',false);
+      }
+      GIFC.img=img;GIFC.src=r.result;
+      syncUploads();
+      toast('Cutout added — pick a moving backdrop below');
+    };
     img.onerror=()=>toast('That file could not be read as an image',false);
     img.src=r.result;
   };
@@ -1475,7 +1639,7 @@ function closeCrop(){
 }
 function finishAsset(slot,asset){
   ASSETS[slot]=asset;
-  if(slot==='photo'){DATA.show.photo=true;syncToggleUI('photo',true);toast('Photo added to every design');}
+  if(slot==='photo'){DATA.show.photo=true;syncToggleUI('photo',true);toast(asset.anim?'Animated profile added to every design':'Photo added to every design');}
   if(slot==='companyLogo'){DATA.show.company=true;syncToggleUI('company',true);}
   if(slot==='schoolLogo'){DATA.show.school=true;syncToggleUI('school',true);}
   syncUploads();
@@ -1494,6 +1658,7 @@ function finishAsset(slot,asset){
   scheduleRender();
 }
 function clearUpload(slot){
+  if(slot==='cutout'){GIFC.img=null;GIFC.src='';syncUploads();toast('Cutout removed',false);return;}
   ASSETS[slot]=null;
   syncUploads();
   scheduleRender();
@@ -1540,6 +1705,549 @@ function bindModal(){
     document.getElementById('crop-zoom').value=nxt;
     setZoom(nxt);
   },{passive:false});
+}
+
+/* ══════════ SHARED BUILD HELPERS — animated profiles & the Word document ══════════
+   Pure logic only (no DOM): image encoding, packaging and the Word document
+   structure. The exact same code runs in the page and in the automated checks. */
+
+// ── bytes → base64, base64 → bytes ──
+function u8ToB64(u8){
+  var T='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',out='',n=u8.length;
+  for(var i=0;i<n;i+=3){
+    var a=u8[i],b=i+1<n?u8[i+1]:0,c=i+2<n?u8[i+2]:0;
+    out+=T[a>>2]+T[((a&3)<<4)|(b>>4)]+(i+1<n?T[((b&15)<<2)|(c>>6)]:'=')+(i+2<n?T[c&63]:'=');
+  }
+  return out;
+}
+function b64ToU8(s){
+  var bin=atob(String(s||'')),u=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  return u;
+}
+function wrapB64Lines(b64){
+  var L=[];
+  for(var i=0;i<b64.length;i+=76)L.push(b64.slice(i,i+76));
+  return L.join('\r\n');
+}
+
+// ── CRC32 (for the Word document container) ──
+var CRC_T=null;
+function crc32(u8){
+  if(!CRC_T){
+    CRC_T=[];
+    for(var n=0;n<256;n++){
+      var c=n;
+      for(var k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);
+      CRC_T[n]=c>>>0;
+    }
+  }
+  var c=0xFFFFFFFF;
+  for(var i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&255]^(c>>>8);
+  return (c^0xFFFFFFFF)>>>0;
+}
+
+// ── minimal zip writer (stored entries — small, dependency-free, Word-safe) ──
+function zipStore(files){
+  var enc=new TextEncoder();
+  var local=[],central=[],off=0;
+  var now=new Date();
+  var dosTime=((now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1))&0xFFFF;
+  var dosDate=(((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate())&0xFFFF;
+  files.forEach(function(f){
+    var nm=enc.encode(f.name);
+    var crc=crc32(f.data);
+    var lh=new Uint8Array(30+nm.length);
+    var dv=new DataView(lh.buffer);
+    dv.setUint32(0,0x04034b50,true);   // local file header signature
+    dv.setUint16(4,20,true);           // version needed
+    dv.setUint16(6,0,true);            // flags
+    dv.setUint16(8,0,true);            // method: store
+    dv.setUint16(10,dosTime,true);
+    dv.setUint16(12,dosDate,true);
+    dv.setUint32(14,crc,true);
+    dv.setUint32(18,f.data.length,true);
+    dv.setUint32(22,f.data.length,true);
+    dv.setUint16(26,nm.length,true);
+    dv.setUint16(28,0,true);
+    lh.set(nm,30);
+    local.push(lh,f.data);
+    var ch=new Uint8Array(46+nm.length);
+    var cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true);   // central directory signature
+    cv.setUint16(4,20,true);           // version made by
+    cv.setUint16(6,20,true);           // version needed
+    cv.setUint16(8,0,true);
+    cv.setUint16(10,0,true);
+    cv.setUint16(12,dosTime,true);
+    cv.setUint16(14,dosDate,true);
+    cv.setUint32(16,crc,true);
+    cv.setUint32(20,f.data.length,true);
+    cv.setUint32(24,f.data.length,true);
+    cv.setUint16(28,nm.length,true);
+    cv.setUint16(30,0,true);           // extra length
+    cv.setUint16(32,0,true);           // comment length
+    cv.setUint16(34,0,true);           // disk number start
+    cv.setUint16(36,0,true);           // internal attrs
+    cv.setUint32(38,0,true);           // external attrs
+    cv.setUint32(42,off,true);         // local header offset
+    ch.set(nm,46);
+    central.push(ch);
+    off+=lh.length+f.data.length;
+  });
+  var cdSize=0;central.forEach(function(c){cdSize+=c.length;});
+  var eocd=new Uint8Array(22);
+  var ev=new DataView(eocd.buffer);
+  ev.setUint32(0,0x06054b50,true);
+  ev.setUint16(4,0,true);
+  ev.setUint16(6,0,true);
+  ev.setUint16(8,files.length,true);
+  ev.setUint16(10,files.length,true);
+  ev.setUint32(12,cdSize,true);
+  ev.setUint32(16,off,true);
+  ev.setUint16(20,0,true);
+  var all=local.concat(central,[eocd]);
+  var len=0;all.forEach(function(a){len+=a.length;});
+  var outp=new Uint8Array(len),p=0;
+  all.forEach(function(a){outp.set(a,p);p+=a.length;});
+  return outp;
+}
+
+// ── Word document: map every embedded image to its own document part ──
+function mhtEncode(html){
+  var parts=[],index={};
+  var out=html.replace(/data:(image\/(?:png|jpeg|gif|svg\+xml));base64,([A-Za-z0-9+/=]+)/g,function(m,mime,b64){
+    var key=mime+'|'+b64;
+    var idx=index[key];
+    if(idx==null){
+      idx=parts.length;
+      index[key]=idx;
+      var ext=mime==='image/png'?'png':mime==='image/gif'?'gif':mime==='image/svg+xml'?'svg':'jpg';
+      parts.push({ext:ext,b64:b64});
+    }
+    return 'file:///C:/fake/image'+idx+'.'+parts[idx].ext;
+  });
+  return {html:out,parts:parts};
+}
+
+// ── Word document: the readable page that carries every design ──
+function buildMht(html,parts){
+  var B='----=_ESC_Signatures';
+  var s='MIME-Version: 1.0\r\nContent-Type: multipart/related; type="text/html"; boundary="'+B+'"\r\n\r\n';
+  s+='--'+B+'\r\n';
+  s+='Content-Type: text/html; charset="utf-8"\r\n';
+  s+='Content-Transfer-Encoding: base64\r\n';
+  s+='Content-Location: file:///C:/fake/signatures.html\r\n\r\n';
+  s+=wrapB64Lines(u8ToB64(new TextEncoder().encode(html)))+'\r\n\r\n';
+  parts.forEach(function(p,i){
+    var mime=p.ext==='jpg'?'image/jpeg':(p.ext==='svg'?'image/svg+xml':'image/'+p.ext);
+    s+='--'+B+'\r\n';
+    s+='Content-Type: '+mime+'\r\n';
+    s+='Content-Transfer-Encoding: base64\r\n';
+    s+='Content-Location: file:///C:/fake/image'+i+'.'+p.ext+'\r\n\r\n';
+    s+=wrapB64Lines(p.b64)+'\r\n\r\n';
+  });
+  s+='--'+B+'--\r\n';
+  return s;
+}
+
+// ── Word document: assemble the complete .docx container ──
+function buildDocxPackage(mht){
+  var enc=new TextEncoder();
+  var CT='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'+
+    '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'+
+    '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'+
+    '<Default Extension="xml" ContentType="application/xml"/>'+
+    '<Default Extension="mht" ContentType="message/rfc822"/>'+
+    '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'+
+    '</Types>';
+  var RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'+
+    '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+    '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'+
+    '</Relationships>';
+  var DOC='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'+
+    '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'+
+    '<w:body>'+
+    '<w:altChunk r:id="htmlChunk"/>'+
+    '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr>'+
+    '</w:body></w:document>';
+  var DRELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'+
+    '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+    '<Relationship Id="htmlChunk" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/aFChunk" Target="afchunk.mht"/>'+
+    '</Relationships>';
+  return zipStore([
+    {name:'[Content_Types].xml',data:enc.encode(CT)},
+    {name:'_rels/.rels',data:enc.encode(RELS)},
+    {name:'word/document.xml',data:enc.encode(DOC)},
+    {name:'word/_rels/document.xml.rels',data:enc.encode(DRELS)},
+    {name:'word/afchunk.mht',data:enc.encode(mht)}
+  ]);
+}
+
+// ══════════ ANIMATED PROFILE ENCODING ══════════
+function gmix(a,b,t){
+  return [Math.round(a[0]+(b[0]-a[0])*t),Math.round(a[1]+(b[1]-a[1])*t),Math.round(a[2]+(b[2]-a[2])*t)];
+}
+function ghex(h){
+  h=String(h||'#000000').replace('#','');
+  if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');
+  return [parseInt(h.slice(0,2),16)||0,parseInt(h.slice(2,4),16)||0,parseInt(h.slice(4,6),16)||0];
+}
+function gcss(c){
+  function v(x){x=Math.round(x);return x<0?0:(x>255?255:x);}
+  return 'rgb('+v(c[0])+','+v(c[1])+','+v(c[2])+')';
+}
+
+// palette: the classic 216 web-safe colours plus the exact colours the moving
+// backdrop and the cutout actually use, so brand colours stay true — with one
+// reserved slot for the see-through rounded corners.
+function buildGifPalette(c1,c2,doms){
+  var pal=[],r,g,b;
+  for(r=0;r<6;r++)for(g=0;g<6;g++)for(b=0;b<6;b++)pal.push([r*51,g*51,b*51]);
+  var customs=[],seen={};
+  function add(c){
+    if(!c)return;
+    var k=c[0]+','+c[1]+','+c[2];
+    if(seen[k]||customs.length>=39)return;
+    seen[k]=1;customs.push(c);
+  }
+  add(c1);add(c2);add(gmix(c1,c2,0.5));
+  add([Math.round(c1[0]*0.35),Math.round(c1[1]*0.35),Math.round(c1[2]*0.35)]);
+  add([Math.round(c2[0]*0.35),Math.round(c2[1]*0.35),Math.round(c2[2]*0.35)]);
+  add([255,255,255]);add([17,17,25]);
+  (doms||[]).forEach(add);
+  return {palette:pal.concat(customs),transparent:216+customs.length};
+}
+
+// frame → palette indices, with Floyd–Steinberg smoothing so soft gradients
+// stay soft; alpha below half becomes the see-through corner colour.
+function quantizeToPalette(data,w,h,palette,transparent){
+  var n=w*h,out=new Uint8Array(n);
+  var er=new Float32Array(n),eg=new Float32Array(n),eb=new Float32Array(n);
+  var m=palette.length,cache=new Map();
+  function nearest(r,g,b){
+    var key=(r>>3)*1024+(g>>3)*32+(b>>3);
+    var v=cache.get(key);
+    if(v===undefined){
+      var bd=Infinity,bi=0;
+      for(var i=0;i<m;i++){
+        var p=palette[i],dr=r-p[0],dg=g-p[1],db=b-p[2],d=dr*dr+dg*dg+db*db;
+        if(d<bd){bd=d;bi=i;}
+      }
+      v=bi;cache.set(key,v);
+    }
+    return v;
+  }
+  for(var y=0;y<h;y++){
+    for(var xx=0;xx<w;xx++){
+      var p=y*w+xx,q=p*4;
+      if(data[q+3]<128){out[p]=transparent;continue;}
+      var r0=data[q]+er[p],g0=data[q+1]+eg[p],b0=data[q+2]+eb[p];
+      var r=r0<0?0:(r0>255?255:r0),g=g0<0?0:(g0>255?255:g0),b=b0<0?0:(b0>255?255:b0);
+      var ri=Math.round(r),gi=Math.round(g),bi2=Math.round(b);
+      var idx=nearest(ri,gi,bi2);
+      out[p]=idx;
+      var pc=palette[idx];
+      var dr=ri-pc[0],dg=gi-pc[1],db=bi2-pc[2];
+      if(xx+1<w){var R=p+1;er[R]+=dr*0.4375;eg[R]+=dg*0.4375;eb[R]+=db*0.4375;}
+      if(y+1<h){
+        var D=p+w;er[D]+=dr*0.3125;eg[D]+=dg*0.3125;eb[D]+=db*0.3125;
+        if(xx>0){var DL=p+w-1;er[DL]+=dr*0.1875;eg[DL]+=dg*0.1875;eb[DL]+=db*0.1875;}
+        if(xx+1<w){var DR=p+w+1;er[DR]+=dr*0.0625;eg[DR]+=dg*0.0625;eb[DR]+=db*0.0625;}
+      }
+    }
+  }
+  return out;
+}
+
+// the classic GIF compression routine, ported faithfully — the reference
+// implementation this format has relied on for decades.
+function gifLZW(pixels,minCodeSize){
+  var clearCode=1<<minCodeSize,eoiCode=clearCode+1,maxbits=12,maxmaxcode=1<<maxbits;
+  var hsize=5003,htab=new Int32Array(hsize),codetab=new Int32Array(hsize);
+  var hi;for(hi=0;hi<hsize;hi++)htab[hi]=-1;
+  var hshift=0,fc;
+  for(fc=hsize;fc<65536;fc*=2)hshift++;
+  hshift=8-hshift;
+  var codeSize=minCodeSize+1,maxcode=(1<<codeSize)-1,next=eoiCode+1,clearFlg=false;
+  var cur=0,curBits=0,bytes=[],blk=[],blkLen=0;
+  function flushBlk(){
+    if(blkLen){
+      bytes.push(blkLen);
+      for(var i=0;i<blkLen;i++)bytes.push(blk[i]);
+      blk.length=0;blkLen=0;
+    }
+  }
+  function putByte(v){
+    blk.push(v&255);blkLen++;
+    if(blkLen>=254)flushBlk();
+  }
+  function output(code){
+    cur|=code<<curBits;curBits+=codeSize;
+    while(curBits>=8){putByte(cur&255);cur>>>=8;curBits-=8;}
+    if(clearFlg){codeSize=minCodeSize+1;maxcode=(1<<codeSize)-1;clearFlg=false;}
+    else if(next>maxcode){
+      codeSize++;
+      if(codeSize===maxbits)maxcode=maxmaxcode;else maxcode=(1<<codeSize)-1;
+    }
+    if(code===eoiCode){
+      while(curBits>0){putByte(cur&255);cur>>>=8;curBits-=8;}
+      flushBlk();
+    }
+  }
+  output(clearCode);
+  var ent=pixels[0];
+  outer_loop:
+  for(var p=1;p<pixels.length;p++){
+    var c=pixels[p];
+    var fcode=(c<<maxbits)+ent;
+    var i=(c<<hshift)^ent;
+    if(htab[i]===fcode){ent=codetab[i];continue;}
+    if(htab[i]>=0){
+      var disp=hsize-i;
+      if(i===0)disp=1;
+      do{
+        if((i-=disp)<0)i+=hsize;
+        if(htab[i]===fcode){ent=codetab[i];continue outer_loop;}
+      }while(htab[i]>=0);
+    }
+    output(ent);
+    ent=c;
+    if(next<maxmaxcode){htab[i]=fcode;codetab[i]=next++;}
+    else{
+      for(var hj=0;hj<hsize;hj++)htab[hj]=-1;
+      next=clearCode+2;clearFlg=true;output(clearCode);
+    }
+  }
+  output(ent);
+  output(eoiCode);
+  return bytes;
+}
+
+// assemble the finished animated image: header, palette, loop, timing, frames.
+function gifBytes(o){
+  var W=[],i;
+  var hdr='GIF89a';
+  for(i=0;i<6;i++)W.push(hdr.charCodeAt(i));
+  W.push(o.w&255,(o.w>>8)&255,o.h&255,(o.h>>8)&255);
+  W.push(0xF7,o.transparent==null?0:o.transparent,0);
+  for(i=0;i<256;i++){
+    var c=o.palette[i]||[0,0,0];
+    W.push(c[0]&255,c[1]&255,c[2]&255);
+  }
+  W.push(0x21,0xFF,0x0B);
+  var ns='NETSCAPE2.0';
+  for(i=0;i<11;i++)W.push(ns.charCodeAt(i));
+  W.push(0x03,0x01,0x00,0x00,0x00);
+  var frames=o.frames;
+  for(var f=0;f<frames.length;f++){
+    W.push(0x21,0xF9,0x04,0x04|(o.transparent!=null?1:0),o.delay&255,(o.delay>>8)&255,o.transparent==null?0:o.transparent,0x00);
+    W.push(0x2C,0,0,0,0,o.w&255,(o.w>>8)&255,o.h&255,(o.h>>8)&255,0x00);
+    W.push(8);
+    var lzw=gifLZW(frames[f],8);
+    for(i=0;i<lzw.length;i++)W.push(lzw[i]);
+    W.push(0x00);
+  }
+  W.push(0x3B);
+  return new Uint8Array(W);
+}
+// ══════════ ANIMATED PROFILE — your cutout over a moving backdrop ══════════
+// (PHOTO_MODE / GIFC / GIF_STYLES / GIF_SPEEDS are declared in the state section)
+function gifColors(){
+  return {c1:GIFC.c1||SCHEME.pri,c2:GIFC.c2||SCHEME.acc};
+}
+function gifStyleVars(){
+  const c=gifColors();
+  return '--g1:'+c.c1+';--g2:'+c.c2+';';
+}
+function roundedClip(x,px,py,w,h,r){
+  x.beginPath();
+  x.moveTo(px+r,py);x.lineTo(px+w-r,py);x.quadraticCurveTo(px+w,py,px+w,py+r);
+  x.lineTo(px+w,py+h-r);x.quadraticCurveTo(px+w,py+h,px+w-r,py+h);
+  x.lineTo(px+r,py+h);x.quadraticCurveTo(px,py+h,px,py+h-r);
+  x.lineTo(px,py+r);x.quadraticCurveTo(px,py,px+r,py);
+  x.closePath();x.clip();
+}
+function drawGifBg(x,w,h,t,c1,c2,style){
+  if(style==='aurora'){
+    const ang=t*Math.PI*2;
+    const gx=Math.cos(ang)*w*0.5,gy=Math.sin(ang)*h*0.5;
+    const g=x.createLinearGradient(w/2-gx,h/2-gy,w/2+gx,h/2+gy);
+    g.addColorStop(0,gcss(c1));
+    g.addColorStop(0.5,gcss(gmix(c1,c2,0.5+0.5*Math.sin(t*Math.PI*2))));
+    g.addColorStop(1,gcss(c2));
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    const rg=x.createRadialGradient(w*(0.5+0.35*Math.cos(t*Math.PI*2+1)),h*(0.5+0.35*Math.sin(t*Math.PI*2+2)),0,w*0.6,h*0.5,w*0.8);
+    rg.addColorStop(0,'rgba(255,255,255,0.20)');rg.addColorStop(1,'rgba(255,255,255,0)');
+    x.fillStyle=rg;x.fillRect(0,0,w,h);
+  }else if(style==='glow'){
+    x.fillStyle=gcss(gmix(c1,c2,0.4).map(v=>v*0.30));x.fillRect(0,0,w,h);
+    const ph=0.5+0.5*Math.sin(t*Math.PI*2);
+    const col=gmix(c1,c2,ph);
+    const R=(0.30+0.32*ph)*Math.max(w,h);
+    const rg=x.createRadialGradient(w/2,h*0.44,0,w/2,h*0.44,R);
+    rg.addColorStop(0,gcss(col));
+    rg.addColorStop(0.55,gcss(col.map(v=>v*0.6)));
+    rg.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=rg;x.fillRect(0,0,w,h);
+  }else if(style==='waves'){
+    const g=x.createLinearGradient(0,0,0,h);
+    g.addColorStop(0,gcss(c1));g.addColorStop(1,gcss(c2));
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    x.globalAlpha=0.15;
+    x.strokeStyle='#ffffff';x.lineWidth=h*0.05;x.lineCap='round';
+    for(let i=0;i<3;i++){
+      const ph=t*Math.PI*2+i*2.1;
+      x.beginPath();
+      x.moveTo(0,h*(0.25+i*0.25)+Math.sin(ph)*h*0.05);
+      for(let px=0;px<=w;px+=6)x.lineTo(px,h*(0.25+i*0.25)+Math.sin(ph+px/w*Math.PI*2)*h*0.05);
+      x.stroke();
+    }
+    x.globalAlpha=1;
+  }else if(style==='rings'){
+    x.fillStyle=gcss(gmix(c1,c2,0.5).map(v=>v*0.28));x.fillRect(0,0,w,h);
+    x.lineCap='round';
+    for(let i=0;i<3;i++){
+      const ph=t*Math.PI*2+i*2.09;
+      const R=Math.max(w,h)*(0.20+i*0.15)+Math.sin(ph)*Math.max(w,h)*0.028;
+      x.beginPath();x.arc(w/2,h/2,R,ph+i*1.3,ph+i*1.3+Math.PI*1.25);
+      x.strokeStyle=gcss(gmix(c1,c2,i/2.2));x.lineWidth=Math.max(2,w*0.04);x.stroke();
+    }
+  }else if(style==='cycle'){
+    x.fillStyle=gcss(gmix(c1,c2,0.5-0.5*Math.cos(t*Math.PI*2)));x.fillRect(0,0,w,h);
+    const rg=x.createRadialGradient(w/2,h/2,Math.min(w,h)*0.22,w/2,h/2,Math.max(w,h)*0.75);
+    rg.addColorStop(0,'rgba(255,255,255,0.10)');rg.addColorStop(1,'rgba(0,0,0,0.18)');
+    x.fillStyle=rg;x.fillRect(0,0,w,h);
+  }else{ // beams
+    x.fillStyle=gcss(gmix(c1,c2,0.35).map(v=>v*0.34));x.fillRect(0,0,w,h);
+    x.save();
+    x.translate(w/2,h/2);x.rotate(t*Math.PI*2);
+    x.globalCompositeOperation='lighter';
+    for(let i=0;i<3;i++){
+      x.rotate(Math.PI*2/3);
+      const g=x.createLinearGradient(0,0,w*0.72,0);
+      const col=gmix(c1,c2,i/2);
+      g.addColorStop(0,'rgba(0,0,0,0)');
+      g.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0.45)');
+      x.fillStyle=g;x.fillRect(0,-h*0.15,w*0.72,h*0.30);
+    }
+    x.restore();
+    x.globalCompositeOperation='source-over';
+  }
+}
+function gifDominants(img){
+  // the cutout's own colours, so faces and clothing stay true in the palette
+  try{
+    const s=40,c=document.createElement('canvas');c.width=s;c.height=s;
+    const x=c.getContext('2d');
+    x.clearRect(0,0,s,s);
+    x.drawImage(img,0,0,s,s);
+    const px=x.getImageData(0,0,s,s).data;
+    const buckets={};
+    for(let i=0;i<px.length;i+=4){
+      if(px[i+3]<200)continue;
+      const key=(px[i]>>4)+','+(px[i+1]>>4)+','+(px[i+2]>>4);
+      if(!buckets[key])buckets[key]={n:0,r:0,g:0,b:0};
+      const bk=buckets[key];bk.n++;bk.r+=px[i];bk.g+=px[i+1];bk.b+=px[i+2];
+    }
+    return Object.values(buckets).sort((a,b)=>b.n-a.n).slice(0,8)
+      .map(bk=>[Math.round(bk.r/bk.n),Math.round(bk.g/bk.n),Math.round(bk.b/bk.n)]);
+  }catch(e){return [];}
+}
+async function createGifProfile(){
+  if(GIFC.busy)return;
+  if(!GIFC.img){toast('Add a cutout first — a picture of you without its background',false);return;}
+  const img=GIFC.img;
+  const square=GIFC.shape==='1:1';
+  const W=square?176:160,H=square?176:200;
+  const FRAMES=24,delay=GIFC.speed;
+  const cols=gifColors();
+  const c1=ghex(cols.c1),c2=ghex(cols.c2);
+  const doms=gifDominants(img);
+  const built=buildGifPalette(c1,c2,doms);
+  const palette=built.palette,transparent=built.transparent;
+  GIFC.busy=true;
+  const btn=document.querySelector('[data-gifmake]');
+  const lab=document.getElementById('gif-prog-label');
+  const fill=document.getElementById('gif-prog-fill');
+  const prog=document.getElementById('gif-progress');
+  if(btn){btn.disabled=true;btn.style.opacity='0.55';}
+  if(prog)prog.hidden=false;
+  if(fill)fill.style.width='0%';
+  const c=document.createElement('canvas');c.width=W;c.height=H;
+  const x=c.getContext('2d',{willReadFrequently:true});
+  const pad=Math.round(H*0.02),maxW=W-pad*2,maxH=H-pad*2;
+  const k=Math.min(maxW/img.width,maxH/img.height);
+  const dw=Math.max(1,Math.round(img.width*k)),dh=Math.max(1,Math.round(img.height*k));
+  const dx=Math.round((W-dw)/2),dy=Math.round((H-dh)/2);
+  const R=Math.round(Math.min(W,H)*0.09);
+  const frames=[];
+  try{
+    for(let f=0;f<FRAMES;f++){
+      const t=f/FRAMES;
+      x.clearRect(0,0,W,H);
+      x.save();
+      roundedClip(x,0,0,W,H,R);
+      drawGifBg(x,W,H,t,c1,c2,GIFC.style);
+      x.drawImage(img,dx,dy,dw,dh);
+      x.restore();
+      frames.push(quantizeToPalette(x.getImageData(0,0,W,H).data,W,H,palette,transparent));
+      if(fill)fill.style.width=Math.round((f+1)/FRAMES*100)+'%';
+      if(lab)lab.textContent='Creating frame '+(f+1)+' of '+FRAMES;
+      if(f%3===2)await new Promise(r=>setTimeout(r));
+    }
+    const bytes=gifBytes({w:W,h:H,palette,transparent,delay,frames});
+    finishAsset('photo',{src:'data:image/gif;base64,'+u8ToB64(bytes),w:W,h:H,anim:true});
+    if(lab)lab.textContent='Done — added to every design';
+    setTimeout(()=>{if(prog)prog.hidden=true;},900);
+  }catch(err){
+    toast('The animated profile could not be created — try another backdrop',false);
+    if(prog)prog.hidden=true;
+  }
+  if(btn){btn.disabled=false;btn.style.opacity='';}
+  GIFC.busy=false;
+}
+
+// ══════════ KEEP EVERYTHING — one Word document with every design ══════════
+function downloadWordDoc(){
+  try{
+    const sections=SIGNATURES.map((s,i)=>`<h2>${String(i+1).padStart(2,'0')} · ${esc(s.title)}</h2>
+      <p class="desc">${esc(s.desc)}</p>
+      <div class="sig">${s.build(DATA)}</div>
+      <div class="txt"><b>Text version</b><br>${esc(plainSig(DATA)).replace(/\n/g,'<br>')}</div>`).join('<hr>');
+    const who=(DATA.name||'My').trim()||'My';
+    const docHtml=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(who)} — Email Signatures</title><style>
+      body{font-family:Calibri,Arial,sans-serif;color:#202430;}
+      h1{font-size:24pt;margin:0;}
+      .sub{color:#6b7280;font-size:10pt;margin:2pt 0 14pt;}
+      .howto{background:#fffbe8;border:1px solid #eadfae;padding:10pt 12pt;font-size:10pt;line-height:1.5;}
+      h2{font-size:13pt;color:#5b21b6;border-bottom:1px solid #d8d3e8;padding-bottom:2pt;margin:20pt 0 8pt;}
+      .desc{color:#6b7280;font-size:9pt;margin:0 0 8pt;}
+      .sig{padding:2pt 0 8pt;}
+      .txt{background:#f5f6fa;border:1px solid #e2e4ee;padding:8pt 10pt;font-family:Consolas,'Courier New',monospace;font-size:9pt;line-height:1.5;}
+      hr{border:0;border-top:1px solid #eceef4;margin:16pt 0;}
+    </style></head><body>
+      <h1>${esc(who)} — Email Signatures</h1>
+      <div class="sub">${SIGNATURES.length} designs · Email Signature Studio · ${new Date().toLocaleDateString()}</div>
+      <div class="howto"><b>How to use:</b> find the design you like, select it, copy with Ctrl/Cmd&nbsp;+&nbsp;C, then paste into your mail app's signature box — the images and their links travel with it. Animated profiles play in most mail apps; a few older ones show only the first frame, which still looks right.</div>
+      ${sections}
+    </body></html>`;
+    const enc=mhtEncode(docHtml);
+    const docx=buildDocxPackage(buildMht(enc.html,enc.parts));
+    const blob=new Blob([docx],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=(who.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'my')+'-signatures.docx';
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+    toast('Word document saved — every design, ready to copy from any time');
+  }catch(err){
+    toast('The document could not be saved — please try again',false);
+  }
+}
+function bindExtras(){
+  const b=document.getElementById('dl-doc-btn');
+  if(b)b.addEventListener('click',downloadWordDoc);
 }
 
 // ══════════ GALLERY ══════════
@@ -1659,6 +2367,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildConfig();
   bindConfig();
   bindModal();
+  bindExtras();
   buildCards();
   bindGrid();
   renderPreviews();
